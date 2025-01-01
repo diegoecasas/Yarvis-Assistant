@@ -22,7 +22,10 @@
    - Guarda todas las consultas y respuestas en una base de datos SQLite para análisis y auditoría.
 
 ---
+## Arquitectura del Sistema
+![image](https://github.com/user-attachments/assets/5c71cb89-144c-47d6-b12d-d029fb21c155)
 
+---
 ## Requisitos del Sistema
 
 - Python 3.8 o superior
