@@ -24,13 +24,14 @@
 ---
 ## Arquitectura del Sistema
 ![image](https://github.com/user-attachments/assets/5c71cb89-144c-47d6-b12d-d029fb21c155)
-Aquí tienes una representación gráfica de la arquitectura del sistema para Yarvis. Cada nodo representa un componente clave, mientras que las flechas indican el flujo de interacción entre los módulos.
 
+Aquí tienes una representación gráfica de la arquitectura del sistema para Yarvis. Cada nodo representa un componente clave, mientras que las flechas indican el flujo de interacción entre los módulos.
 main.py es el núcleo que orquesta los demás módulos.
 Conexiones principales:
 La entrada de voz (voice_input.py) interactúa con el modelo LLM o el manejador de tareas.
 La salida de voz (voice_output.py) recibe respuestas desde el LLM o las tareas.
 Todos los datos importantes se almacenan en la base de datos (database.py).
+
 ---
 ## Requisitos del Sistema
 
