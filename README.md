@@ -29,7 +29,7 @@ La arquitectura modular de Yarvis garantiza escalabilidad y facilidad de manteni
 
 ### **Gráfica de la Arquitectura**
 
-![Arquitectura de Yarvis](path/to/architecture-image.png)
+![image](https://github.com/user-attachments/assets/c328adf5-cc3e-46ba-8e81-1ff3951b172a)
 
 ### **Explicación**
 
