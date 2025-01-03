@@ -90,35 +90,36 @@ Todos los datos importantes se almacenan en la base de datos (database.py).
 ## Estructura del Proyecto
 
 ```plaintext
-
 yarvis_assistant/
 │
-├── main.py                # Archivo principal que inicia el asistente.
-├── config/
-│   ├── settings.py         # Configuración general (API keys, idioma, palabra clave).
-│   ├── constants.py        # Valores constantes compartidos entre módulos.
+├── main.py                # Orquesta el flujo completo del asistente.
+├── config/                # Configuración general del sistema.
+│   ├── settings.py         # Claves de API, idioma y palabra clave.
+│   ├── constants.py        # Constantes y valores compartidos.
 │
-├── core/                  # Módulos principales para interacción de voz y ChatGPT.
-│   ├── voice_input.py      # Captura de entrada de voz y detección de activación.
-│   ├── voice_output.py     # Generación de respuesta hablada desde texto.
-│   ├── llm_integration.py  # Conexión directa con la API de ChatGPT.
+├── core/                  # Lógica principal del asistente.
+│   ├── voice_input.py      # Captura de entrada de voz (activación y consulta del usuario).
+│   ├── voice_output.py     # Convierte las respuestas en voz (respuesta hablada a usuario).
+│   ├── llm_integration.py  # Comunicación directa con ChatGPT a través de la API.
 │
-├── utils/                 # Funciones auxiliares.
-│   ├── logger.py           # Registro de eventos (opcional para debugging).
-│   ├── helpers.py          # Funciones comunes y reutilizables.
+├── utils/                 # Utilidades auxiliares.
+│   ├── logger.py           # Registro de eventos (opcional para depuración).
+│   ├── helpers.py          # Funciones auxiliares comunes y reutilizables.
 │
-├── database/              # Registro de interacciones (opcional).
-│   ├── database.py         # Gestión y almacenamiento en SQLite.
+├── ui/                    # Gestión de interfaz gráfica (opcional).
+│   ├── dark_ui.py          # Pantalla oscura con línea oscilante para visualización.
+│
+├── database/              # Gestión de almacenamiento de interacciones (opcional).
+│   ├── database.py         # Operaciones CRUD con SQLite.
 │   └── schema.sql          # Esquema inicial de la base de datos.
 │
-├── tests/                 # Pruebas unitarias de los módulos principales.
-│   ├── test_voice.py       # Pruebas para captura y salida de voz.
-│   ├── test_llm.py         # Pruebas para la integración con ChatGPT.
+├── tests/                 # Pruebas unitarias de cada módulo.
+│   ├── test_voice.py       # Pruebas para entrada y salida de voz.
+│   ├── test_llm.py         # Pruebas para la conexión con ChatGPT.
 │
 ├── README.md               # Documentación del proyecto.
 ├── LICENSE                 # Licencia del proyecto.
-└── requirements.txt        # Dependencias del proyecto.
-
+└── requirements.txt        # Dependencias necesarias (bibliotecas de Python).
 
 ---
 
