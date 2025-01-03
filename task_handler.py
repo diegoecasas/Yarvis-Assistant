@@ -1,31 +1,47 @@
-from core.llm_integration import ask_llm
 from core.voice_output import speak
+import speech_recognition as sr
+from config.settings import LANGUAGE, ACTIVATION_WORD
+from core.llm_integration import ask_llm
 
-def handle_task(user_query):
+def listen_for_activation():
     """
-    Procesa tareas específicas basadas en la consulta del usuario.
-    Detecta el contexto (domicilio, cita médica, etc.) y responde apropiadamente.
-    
-    Args:
-        user_query (str): Consulta ingresada por el usuario.
-
-    Returns:
-        str: Respuesta procesada para la tarea.
+    Escucha continuamente al usuario hasta detectar la palabra de activación.
+    Retorna el comando completo dicho por el usuario o una cadena vacía si no se detecta.
     """
-    # Detectar el tipo de tarea
-    if "pedido" in user_query:
-        task_type = "pedido a domicilio"
-        speak("Entendido, procesando tu pedido a domicilio.")
-        response = ask_llm(f"Gestiona un {task_type} con la siguiente solicitud: {user_query}")
-    elif "cita" in user_query:
-        task_type = "cita médica"
-        speak("Entendido, procesando tu cita médica.")
-        response = ask_llm(f"Gestiona una {task_type} con la siguiente solicitud: {user_query}")
-    else:
-        task_type = "consulta general"
-        speak("Estoy buscando la información para tu consulta.")
-        response = ask_llm(user_query)
+    recognizer = sr.Recognizer()
+    while True:
+        with sr.Microphone() as source:
+            try:
+                audio = recognizer.listen(source)
+                command = recognizer.recognize_google(audio, language=LANGUAGE).lower()
+                if ACTIVATION_WORD in command:
+                    speak("¡Yarvis activado! ¿En qué puedo ayudarte?")
+                    return command
+            except sr.UnknownValueError:
+                continue  # Ignorar ruido o comandos no entendidos
+            except sr.RequestError:
+                speak("Error al conectarse al servicio de reconocimiento de voz.")
+                return ""
 
-    # Confirmar la respuesta al usuario
-    speak("Aquí está el resultado de tu solicitud.")
-    return response
+def capture_user_query():
+    """
+    Captura la consulta del usuario tras la activación y envía el texto a ChatGPT.
+    Retorna la respuesta generada por ChatGPT.
+    """
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        speak("Estoy escuchando tu consulta.")
+        try:
+            audio = recognizer.listen(source)
+            query = recognizer.recognize_google(audio, language=LANGUAGE).lower()
+            speak("Procesando tu consulta.")
+            response = ask_llm(query)  # Enviar directamente a ChatGPT
+            speak(response)  # Responder con la voz de Yarvis
+            return response
+        except sr.UnknownValueError:
+            speak("Lo siento, no entendí tu consulta.")
+            return ""
+        except sr.RequestError:
+            speak("Error al conectarse al servicio de reconocimiento de voz.")
+            return ""
+
