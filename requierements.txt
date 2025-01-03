@@ -1,8 +1,13 @@
-Requisitos del Sistema
-Python 3.8 o superior
-Bibliotecas requeridas (ver requirements.txt):
-speechrecognition
-pyttsx3
-openai
-sqlite3
-pytest (opcional para pruebas)
+# Dependencias principales
+openai==0.27.0         # Comunicación con ChatGPT
+speechrecognition==3.8.1  # Procesamiento de entrada de voz
+pyttsx3==2.90          # Conversión de texto a voz
+tkinter                 # Interfaz gráfica (integrado en Python en la mayoría de las distribuciones)
+sqlite3                 # Base de datos (integrado en Python)
+
+# Desarrollo y pruebas
+pytest==7.4.0          # Framework para pruebas
+unittest               # Biblioteca de pruebas (integrado en Python)
+
+# Utilidades
+python-dotenv==1.0.0   # Manejo de variables de entorno para configuraciones
