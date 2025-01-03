@@ -1,46 +1,30 @@
 # main.py
-
-from config.settings import ACTIVATION_WORD
 from core.voice_input import listen_for_activation, capture_user_query
 from core.voice_output import speak
-from core.llm_integration import ask_llm
-from core.task_handler import handle_task
-from database.database import initialize_database, save_interaction
+from config.settings import ACTIVATION_WORD
+from database.database import get_user_name
 
 def main():
     """
-    Punto de entrada principal del asistente Yarvis.
-    - Escucha comandos de voz.
-    - Procesa consultas generales o tareas específicas.
-    - Responde en voz.
+    Función principal que coordina el flujo del asistente Yarvis.
+    - Escucha la palabra de activación.
+    - Captura consultas del usuario.
+    - Conecta directamente con ChatGPT para obtener respuestas.
+    - Responde al usuario mediante voz.
     """
-    print("Inicializando Yarvis...")
-    speak("Hola, soy Yarvis. Estoy listo para ayudarte.")
-    initialize_database()  # Asegurarse de que la base de datos está configurada.
+    user_name = get_user_name()  # Obtener el nombre del usuario desde la base de datos
+    speak(f"Hola, {user_name}. Soy Yarvis. Estoy listo para ayudarte.")
 
     while True:
         # Escuchar activación
         command = listen_for_activation()
         if ACTIVATION_WORD in command:
-            speak("¡Yarvis activado! ¿En qué puedo ayudarte?")
-            
-            # Capturar la consulta del usuario
+            # Capturar consulta del usuario y procesarla
             user_query = capture_user_query()
-            if not user_query:
-                speak("Lo siento, no entendí tu consulta.")
-                continue
-            
-            # Procesar la consulta: General o Específica
-            if "pedido" in user_query or "cita" in user_query:
-                response = handle_task(user_query)
+            if user_query:
+                speak(f"Procesando tu solicitud, {user_name}.")
             else:
-                response = ask_llm(user_query)
-
-            # Responder al usuario
-            speak(response)
-
-            # Guardar interacción en la base de datos
-            save_interaction(user_query, response)
+                speak(f"No entendí tu consulta, {user_name}. Intenta nuevamente.")
 
 if __name__ == "__main__":
     main()
